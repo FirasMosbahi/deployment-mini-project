@@ -48,11 +48,20 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/todo-app:${{ github.run_id }}
 
-      - name: Update Kubernetes Deployment YAML
+  update_k8s_deployment:
+    name: Update Kubernetes Deployment YAML
+    needs: build_and_push_docker
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Update image tag in Kubernetes deployment file
         run: |
           sed -i "s|image: firasmosbehi/todo-app.*|image: firasmosbehi/todo-app:${{ github.run_id }}|" k8s/deployment.yaml
 
-      - name: Commit and Push Deployment File
+      - name: Commit and Push Updated Deployment File
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"

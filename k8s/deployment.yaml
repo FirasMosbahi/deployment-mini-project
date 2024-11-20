@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: todo-app
-          image: firasmosbehi/todo-app:11920770503
+          image: firasmosbehi/todo-app:11920864701
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
